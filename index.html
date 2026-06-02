@@ -40,6 +40,10 @@
       --color-primary: #01696f;
       --color-primary-hover: #0c4e54;
       --color-primary-soft: #dbe9e8;
+      --color-gold: #b8871b;
+      --color-gold-soft: #efe2bf;
+      --color-blue-soft: #d8e8f2;
+      --color-green-soft: #dcecdf;
       --shadow-sm: 0 1px 2px rgba(30,24,18,0.06);
       --shadow-md: 0 10px 30px rgba(30,24,18,0.10);
       --radius-sm: 0.5rem;
@@ -65,6 +69,10 @@
       --color-primary: #5ea7ae;
       --color-primary-hover: #7db9bf;
       --color-primary-soft: #243738;
+      --color-gold: #e6bc63;
+      --color-gold-soft: #3b3528;
+      --color-blue-soft: #243744;
+      --color-green-soft: #24382b;
       --shadow-sm: 0 1px 2px rgba(0,0,0,0.24);
       --shadow-md: 0 14px 34px rgba(0,0,0,0.35);
     }
@@ -313,9 +321,66 @@
       margin-bottom: var(--space-3);
     }
 
+    .hero-media {
+      margin-top: var(--space-6);
+      border-radius: calc(var(--radius-xl) - var(--space-3));
+      overflow: hidden;
+      border: 1px solid color-mix(in srgb, var(--color-primary) 22%, var(--color-border));
+      box-shadow: var(--shadow-md);
+      position: relative;
+      min-height: 240px;
+    }
+    .hero-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      aspect-ratio: 16 / 8;
+      filter: saturate(1.02) contrast(1.03);
+    }
+    .hero-media::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.08) 100%);
+      pointer-events: none;
+    }
+    .visual-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: var(--space-4);
+      margin-top: var(--space-4);
+    }
+    .photo-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+    .photo-card img {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+    }
+    .photo-card .caption {
+      padding: var(--space-4);
+      color: var(--color-text-muted);
+      font-size: var(--text-sm);
+    }
+    .tone-gold { background: color-mix(in srgb, var(--color-gold-soft) 72%, var(--color-surface)); }
+    .tone-blue { background: color-mix(in srgb, var(--color-blue-soft) 72%, var(--color-surface)); }
+    .tone-green { background: color-mix(in srgb, var(--color-green-soft) 72%, var(--color-surface)); }
+    .accent-line {
+      height: 4px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--color-primary), var(--color-gold));
+      margin-bottom: var(--space-4);
+      width: 88px;
+    }
+
     @media (max-width: 760px) {
       .page { padding: var(--space-4); }
-      .hero-grid, .cards { grid-template-columns: 1fr; }
+      .hero-grid, .cards, .visual-grid { grid-template-columns: 1fr; }
       .section-head, .topbar { align-items: flex-start; flex-direction: column; }
       .rank-row { grid-template-columns: 52px 1fr; }
       table, thead, tbody, th, td, tr { display: block; }
@@ -369,18 +434,21 @@
       <h1>家庭世界盃競猜 HTML 規則卡</h1>
       <p>5 位家人，每人投入 $1000，總彩金 $5000。每人選 2 隊：1 主隊、1 副隊；只求盡量一人獨得，不用分數制，直接按冠軍命中與淘汰走勢決勝。</p>
       <div class="hero-grid">
-        <div class="mini-card">
+        <div class="mini-card tone-gold">
           <div class="label">參加人數</div>
           <div class="value">5 人</div>
         </div>
-        <div class="mini-card">
+        <div class="mini-card tone-blue">
           <div class="label">每人投入</div>
           <div class="value">$1000</div>
         </div>
-        <div class="mini-card">
+        <div class="mini-card tone-green">
           <div class="label">總彩金</div>
           <div class="value">$5000</div>
         </div>
+      </div>
+      <div class="hero-media">
+        <img src="https://pplx-res.cloudinary.com/image/upload/pplx_search_images/10a83e50e4237294a1cb71117cb017087b8e2219.jpg" alt="世界盃獎盃置於夜間球場草地中央" width="960" height="524" loading="lazy">
       </div>
     </section>
 
@@ -455,7 +523,10 @@
 
     <section class="section">
       <div class="section-head">
-        <h2>四種情況</h2>
+        <div>
+          <div class="accent-line"></div>
+          <h2>四種情況</h2>
+        </div>
         <div class="section-note">你們最常會討論的結果</div>
       </div>
       <table>
@@ -491,9 +562,33 @@
       </table>
     </section>
 
+
     <section class="section">
       <div class="section-head">
-        <h2>例子對照</h2>
+        <div>
+          <div class="accent-line"></div>
+          <h2>球賽氣氛</h2>
+        </div>
+        <div class="section-note">加強頁面視覺層次</div>
+      </div>
+      <div class="visual-grid">
+        <article class="photo-card">
+          <img src="https://pplx-res.cloudinary.com/image/upload/pplx_search_images/7509d803f60701db512d201b0744633dbc88e5a1.jpg" alt="足球放在草地上，背景為球場燈光" width="700" height="686" loading="lazy">
+          <div class="caption">用足球與草地畫面，令規則頁不只是文字，也更有世界盃入場感。</div>
+        </article>
+        <article class="photo-card">
+          <img src="https://pplx-res.cloudinary.com/image/upload/pplx_search_images/7fe3014fe218b8090d42be62c4acb04ae7c26fd8.jpg" alt="球迷在球場內歡呼慶祝" width="1300" height="955" loading="lazy">
+          <div class="caption">加入球迷照片，可突出家庭競猜的熱鬧與臨場感。</div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <div class="accent-line"></div>
+          <h2>例子對照</h2>
+        </div>
         <div class="section-note">一眼睇明誰贏</div>
       </div>
       <table>
