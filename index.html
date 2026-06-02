@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>family-world-cup-rules</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Noto+Sans+TC:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root, [data-theme="light"] {
+      --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+      --text-sm: clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
+      --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+      --text-lg: clamp(1.125rem, 1rem + 0.75vw, 1.5rem);
+      --text-xl: clamp(1.5rem, 1.2rem + 1.25vw, 2.25rem);
+      --text-2xl: clamp(2rem, 1.2rem + 2.5vw, 3.5rem);
+
+      --space-1: 0.25rem;
+      --space-2: 0.5rem;
+      --space-3: 0.75rem;
+      --space-4: 1rem;
+      --space-5: 1.25rem;
+      --space-6: 1.5rem;
+      --space-8: 2rem;
+      --space-10: 2.5rem;
+      --space-12: 3rem;
+      --space-16: 4rem;
+
+      --color-bg: #f7f6f2;
+      --color-surface: #f9f8f5;
+      --color-surface-2: #fbfbf9;
+      --color-surface-offset: #edeae5;
+      --color-border: #d4d1ca;
+      --color-divider: #dcd9d5;
+      --color-text: #28251d;
+      --color-text-muted: #67645f;
+      --color-text-faint: #9a9892;
+      --color-text-inverse: #f9f8f4;
+      --color-primary: #01696f;
+      --color-primary-hover: #0c4e54;
+      --color-primary-soft: #dbe9e8;
+      --shadow-sm: 0 1px 2px rgba(30,24,18,0.06);
+      --shadow-md: 0 10px 30px rgba(30,24,18,0.10);
+      --radius-sm: 0.5rem;
+      --radius-md: 0.875rem;
+      --radius-lg: 1.25rem;
+      --radius-xl: 1.75rem;
+      --content-default: 960px;
+      --font-display: 'Instrument Serif', Georgia, serif;
+      --font-body: 'Noto Sans TC', 'PingFang TC', sans-serif;
+    }
+
+    [data-theme="dark"] {
+      --color-bg: #171614;
+      --color-surface: #1d1c19;
+      --color-surface-2: #23221f;
+      --color-surface-offset: #2b2a27;
+      --color-border: #3a3936;
+      --color-divider: #2b2a28;
+      --color-text: #e3e0d8;
+      --color-text-muted: #b0aca3;
+      --color-text-faint: #807c74;
+      --color-text-inverse: #171614;
+      --color-primary: #5ea7ae;
+      --color-primary-hover: #7db9bf;
+      --color-primary-soft: #243738;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.24);
+      --shadow-md: 0 14px 34px rgba(0,0,0,0.35);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+      scroll-behavior: smooth;
+    }
+    body {
+      min-height: 100dvh;
+      background:
+        radial-gradient(circle at top right, rgba(1,105,111,0.08), transparent 28%),
+        radial-gradient(circle at bottom left, rgba(1,105,111,0.05), transparent 25%),
+        var(--color-bg);
+      color: var(--color-text);
+      font-family: var(--font-body);
+      font-size: var(--text-base);
+      line-height: 1.65;
+    }
+    a, button { transition: all 180ms cubic-bezier(0.16, 1, 0.3, 1); }
+    .page {
+      max-width: var(--content-default);
+      margin: 0 auto;
+      padding: var(--space-6);
+    }
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--space-4);
+      margin-bottom: var(--space-8);
+      padding-top: var(--space-2);
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-3);
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+      letter-spacing: 0.02em;
+    }
+    .logo {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--color-primary-soft);
+      color: var(--color-primary);
+      display: grid;
+      place-items: center;
+      border: 1px solid color-mix(in srgb, var(--color-primary) 18%, transparent);
+    }
+    .theme-toggle {
+      min-width: 44px;
+      min-height: 44px;
+      border-radius: 999px;
+      border: 1px solid var(--color-border);
+      background: var(--color-surface);
+      color: var(--color-text);
+      display: grid;
+      place-items: center;
+      box-shadow: var(--shadow-sm);
+    }
+    .theme-toggle:hover { background: var(--color-surface-2); }
+
+    .hero {
+      background: linear-gradient(180deg, color-mix(in srgb, var(--color-surface) 92%, white 8%), var(--color-surface));
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: clamp(var(--space-6), 5vw, var(--space-12));
+      box-shadow: var(--shadow-md);
+      margin-bottom: var(--space-8);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto -10% -20% auto;
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      background: radial-gradient(circle, color-mix(in srgb, var(--color-primary) 16%, transparent), transparent 65%);
+      pointer-events: none;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: 0.45rem 0.8rem;
+      border-radius: 999px;
+      background: var(--color-primary-soft);
+      color: var(--color-primary);
+      font-size: var(--text-xs);
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      margin-bottom: var(--space-4);
+    }
+    h1 {
+      font-family: var(--font-display);
+      font-size: var(--text-2xl);
+      line-height: 1.02;
+      letter-spacing: -0.02em;
+      max-width: 12ch;
+      margin-bottom: var(--space-4);
+    }
+    .hero p {
+      max-width: 58ch;
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-6);
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-4);
+    }
+    .mini-card {
+      background: color-mix(in srgb, var(--color-surface-2) 88%, transparent);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-4);
+    }
+    .mini-card .label {
+      font-size: var(--text-xs);
+      color: var(--color-text-faint);
+      margin-bottom: var(--space-2);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .mini-card .value {
+      font-size: var(--text-lg);
+      font-weight: 800;
+    }
+
+    .section {
+      margin-bottom: var(--space-8);
+    }
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: var(--space-4);
+      margin-bottom: var(--space-4);
+    }
+    h2 {
+      font-size: var(--text-xl);
+      font-family: var(--font-display);
+      line-height: 1.08;
+    }
+    .section-note {
+      color: var(--color-text-muted);
+      font-size: var(--text-sm);
+    }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-4);
+    }
+    .card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+      box-shadow: var(--shadow-sm);
+    }
+    .card h3 {
+      font-size: var(--text-lg);
+      margin-bottom: var(--space-3);
+    }
+    .list {
+      display: grid;
+      gap: var(--space-2);
+      color: var(--color-text-muted);
+    }
+    .list strong { color: var(--color-text); }
+
+    .rank-box {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+    .rank-row {
+      display: grid;
+      grid-template-columns: 68px 1fr;
+      gap: var(--space-4);
+      padding: var(--space-4) var(--space-5);
+      border-top: 1px solid var(--color-divider);
+      align-items: start;
+    }
+    .rank-row:first-child { border-top: none; }
+    .rank-no {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--color-primary-soft);
+      color: var(--color-primary);
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+    }
+    .rank-content b { display: block; margin-bottom: 0.2rem; }
+    .rank-content p { color: var(--color-text-muted); }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+    th, td {
+      text-align: left;
+      padding: 0.95rem 1rem;
+      border-top: 1px solid var(--color-divider);
+      vertical-align: top;
+    }
+    th {
+      border-top: none;
+      background: color-mix(in srgb, var(--color-surface-2) 90%, transparent);
+      font-size: var(--text-sm);
+    }
+    tr:first-child td { border-top: none; }
+
+    .footer-card {
+      background: linear-gradient(180deg, var(--color-surface), color-mix(in srgb, var(--color-primary-soft) 35%, var(--color-surface)));
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+    }
+    .footer-card p { color: var(--color-text-muted); margin-top: var(--space-3); }
+
+    .pill {
+      display: inline-block;
+      padding: 0.35rem 0.7rem;
+      background: var(--color-primary-soft);
+      color: var(--color-primary);
+      border-radius: 999px;
+      font-size: var(--text-xs);
+      font-weight: 700;
+      margin-bottom: var(--space-3);
+    }
+
+    @media (max-width: 760px) {
+      .page { padding: var(--space-4); }
+      .hero-grid, .cards { grid-template-columns: 1fr; }
+      .section-head, .topbar { align-items: flex-start; flex-direction: column; }
+      .rank-row { grid-template-columns: 52px 1fr; }
+      table, thead, tbody, th, td, tr { display: block; }
+      thead { display: none; }
+      table { border: none; background: transparent; box-shadow: none; }
+      tr {
+        margin-bottom: var(--space-4);
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        box-shadow: var(--shadow-sm);
+      }
+      td {
+        border-top: 1px solid var(--color-divider);
+        padding: 0.85rem 1rem;
+      }
+      td:first-child { border-top: none; }
+      td::before {
+        content: attr(data-label);
+        display: block;
+        font-size: var(--text-xs);
+        color: var(--color-text-faint);
+        margin-bottom: 0.2rem;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="topbar">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-label="World Cup rules logo">
+            <circle cx="12" cy="12" r="8"></circle>
+            <path d="M8.5 8.5l3.5-2 3.5 2v4l-3.5 2-3.5-2v-4z"></path>
+            <path d="M12 14.5v3"></path>
+          </svg>
+        </div>
+        <span>家庭世界盃競猜規則卡</span>
+      </div>
+      <button class="theme-toggle" data-theme-toggle aria-label="切換深色模式">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+      </button>
+    </div>
+
+    <section class="hero">
+      <div class="eyebrow">一人獨得版</div>
+      <h1>家庭世界盃競猜 HTML 規則卡</h1>
+      <p>5 位家人，每人投入 $1000，總彩金 $5000。每人選 2 隊：1 主隊、1 副隊；只求盡量一人獨得，不用分數制，直接按冠軍命中與淘汰走勢決勝。</p>
+      <div class="hero-grid">
+        <div class="mini-card">
+          <div class="label">參加人數</div>
+          <div class="value">5 人</div>
+        </div>
+        <div class="mini-card">
+          <div class="label">每人投入</div>
+          <div class="value">$1000</div>
+        </div>
+        <div class="mini-card">
+          <div class="label">總彩金</div>
+          <div class="value">$5000</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>基本規則</h2>
+        <div class="section-note">簡單、直接、容易執行</div>
+      </div>
+      <div class="cards">
+        <article class="card">
+          <h3>玩法設定</h3>
+          <div class="list">
+            <div><strong>5 人玩</strong>，每人 $1000。</div>
+            <div><strong>每人選 2 隊</strong>：1 主隊（王牌）、1 副隊（保險）。</div>
+            <div><strong>不設分數制</strong>，只看命中冠軍與淘汰走勢。</div>
+          </div>
+        </article>
+        <article class="card">
+          <h3>勝負原則</h3>
+          <div class="list">
+            <div><strong>估中冠軍優先</strong>，無論主隊或副隊都算。</div>
+            <div><strong>多人估中冠軍</strong>，再比較主隊優先。</div>
+            <div><strong>冇人估中</strong>，才按主隊再副隊排位。</div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>決勝次序</h2>
+        <div class="section-note">由上而下，逐步比較</div>
+      </div>
+      <div class="rank-box">
+        <div class="rank-row">
+          <div class="rank-no">1</div>
+          <div class="rank-content">
+            <b>先看有沒有估中冠軍</b>
+            <p>只要有人估中冠軍，不論是主隊還是副隊，都先進入最高優先級。</p>
+          </div>
+        </div>
+        <div class="rank-row">
+          <div class="rank-no">2</div>
+          <div class="rank-content">
+            <b>若多人估中冠軍，比較主隊</b>
+            <p>主隊估中冠軍者優先；若同樣主隊都在同級，再比較副隊誰走得更遠。</p>
+          </div>
+        </div>
+        <div class="rank-row">
+          <div class="rank-no">3</div>
+          <div class="rank-content">
+            <b>若無人估中冠軍，看淘汰走勢</b>
+            <p>先比主隊，排序為：冠軍 ＞ 亞軍 ＞ 四強 ＞ 8 強 ＞ 16 強 ＞ 小組出局。</p>
+          </div>
+        </div>
+        <div class="rank-row">
+          <div class="rank-no">4</div>
+          <div class="rank-content">
+            <b>主隊同級，再比副隊</b>
+            <p>副隊只在主隊同級時出手，作為最後的保險和決勝依據。</p>
+          </div>
+        </div>
+        <div class="rank-row">
+          <div class="rank-no">5</div>
+          <div class="rank-content">
+            <b>仍然完全一樣，才平分</b>
+            <p>只有主隊同級加副隊同級，才出現唯一平局，平分全部 $5000。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>四種情況</h2>
+        <div class="section-note">你們最常會討論的結果</div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>情況</th>
+            <th>例子</th>
+            <th>結果</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td data-label="情況"><strong>情況一</strong></td>
+            <td data-label="例子">1 人主隊估中冠軍</td>
+            <td data-label="結果">該人直接獨得 $5000</td>
+          </tr>
+          <tr>
+            <td data-label="情況"><strong>情況二</strong></td>
+            <td data-label="例子">1 人副隊估中冠軍</td>
+            <td data-label="結果">該人直接獨得 $5000，因為估中冠軍優先</td>
+          </tr>
+          <tr>
+            <td data-label="情況"><strong>情況三</strong></td>
+            <td data-label="例子">冇人估中冠軍</td>
+            <td data-label="結果">主隊走得最遠者勝；若主隊同級，再比副隊</td>
+          </tr>
+          <tr>
+            <td data-label="情況"><strong>情況四</strong></td>
+            <td data-label="例子">多人估中冠軍</td>
+            <td data-label="結果">先比主隊，再比副隊；盡可能一人獨得</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>例子對照</h2>
+        <div class="section-note">一眼睇明誰贏</div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>A</th>
+            <th>B</th>
+            <th>結果</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td data-label="A">主隊冠軍</td>
+            <td data-label="B">主隊亞軍</td>
+            <td data-label="結果">A 獨得 $5000</td>
+          </tr>
+          <tr>
+            <td data-label="A">主隊亞軍</td>
+            <td data-label="B">副隊中冠軍</td>
+            <td data-label="結果">B 獨得 $5000</td>
+          </tr>
+          <tr>
+            <td data-label="A">主隊亞軍、副隊四強</td>
+            <td data-label="B">主隊亞軍、副隊 8 強</td>
+            <td data-label="結果">A 獨得 $5000</td>
+          </tr>
+          <tr>
+            <td data-label="A">主隊冠軍、副隊亞軍</td>
+            <td data-label="B">主隊冠軍、副隊亞軍</td>
+            <td data-label="結果">平分 $5000（各 $2500）</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section">
+      <div class="footer-card">
+        <span class="pill">可直接貼入家庭群組</span>
+        <h2>最終版重點</h2>
+        <p>估中冠軍者優先，無論主隊或副隊都算；多人估中時，主隊優先，之後再比副隊。只有主隊與副隊都完全相同，先至平分彩金；其餘情況一律盡量一人獨得。</p>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      const root = document.documentElement;
+      const toggle = document.querySelector('[data-theme-toggle]');
+      let theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      root.setAttribute('data-theme', theme);
+
+      const renderIcon = () => {
+        toggle.innerHTML = theme === 'dark'
+          ? '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path></svg>'
+          : '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>';
+        toggle.setAttribute('aria-label', theme === 'dark' ? '切換淺色模式' : '切換深色模式');
+      };
+
+      renderIcon();
+      toggle.addEventListener('click', function () {
+        theme = theme === 'dark' ? 'light' : 'dark';
+        root.setAttribute('data-theme', theme);
+        renderIcon();
+      });
+    })();
+  </script>
+</body>
+</html>
